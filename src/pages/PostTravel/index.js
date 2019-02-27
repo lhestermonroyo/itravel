@@ -7,13 +7,22 @@ class PostTravel extends Component {
     super();
 
     this.state = {
+      name: '',
+      description: '',
+      location: '',
+      type: '',
       photos: [],
     }
 
+    this.handleChange = this.handleChange.bind(this);
     this.handlePhotos = this.handlePhotos.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(e) {
-
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
   }
   handlePhotos(e) {
     let imgArray = [];
@@ -28,43 +37,56 @@ class PostTravel extends Component {
       photos: this.state.photos.concat(imgArray),
     });
   }
-  handleRemove(photo) {
+  handleRemove(p) {
     this.setState({
-      photos: this.state.photos.filter(p => (photo === p) ? null : p),
+      photos: this.state.photos.filter(photo => (p === photo) ? null : photo),
     });
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const newTravel = {
+      userId: '',
+      name: this.state.name,
+      description: this.state.description,
+      location: this.state.location,
+      type: this.state.type,
+      photos: this.state.photos,
+    };
+
+    console.log("New travel:", newTravel);
   }
   render() {
     const { photos } = this.state;
-    console.log(photos);
     return (
       <Container>
         <p className="display-4" style={{marginBottom: -6}}>Post Travel Destination</p>
         <small className="text-secondary">Promote your choosen travel destination by filling it's details below.</small>
-        <Form className="mt-4">
+        <Form className="mt-4" onSubmit={this.handleSubmit}>
           <Row>
             <Col md={12}>
               <FormGroup>
-                <FormControl type="text" name="name" onChange={this.handleChange} placeholder="Destination Name"></FormControl>
+                <FormControl type="text" name="name" onChange={this.handleChange} value={this.state.name} placeholder="Destination Name"></FormControl>
               </FormGroup>
             </Col>
             <Col md={12}>
               <FormGroup>
-                <FormControl as="textarea" name="description" rows={5} placeholder="Description"></FormControl>
+                <FormControl as="textarea" name="description" onChange={this.handleChange} value={this.state.description} rows={5} placeholder="Description"></FormControl>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <FormControl type="text" name="location" placeholder="Location"></FormControl>
+                <FormControl type="text" name="location" onChange={this.handleChange} value={this.state.location} placeholder="Location"></FormControl>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <FormControl as="select">
-                  <option>Beaches, tropical island, scuba diving, etc..</option>
-                  <option>Hiking, camping areas, mountains, forest, etc..</option>
-                  <option>National parks or parks</option>
-                  <option>Landmarks, historical places, monuments</option>
-                  <option>Museums and art galleries</option>
+                <FormControl as="select" onChange={this.handleChange} name="type">
+                  <option value="Beaches, tropical island, scuba diving, etc..">Beaches, tropical island, scuba diving, etc..</option>
+                  <option value="Hiking, camping areas, mountains, forest, etc..">Hiking, camping areas, mountains, forest, etc..</option>
+                  <option value="National parks or parks">National parks or parks</option>
+                  <option value="Landmarks, historical places, monuments">Landmarks, historical places, monuments</option>
+                  <option value="Museums and art galleries">Museums and art galleries</option>
                   <option selected="selected">Destination Type</option>
                 </FormControl>
               </FormGroup>
@@ -96,7 +118,7 @@ class PostTravel extends Component {
               null
             }
             <Col md={12}>
-              <Button variant="primary" className="mt-3">Post It <i className="fa fa-check fa-fw"></i></Button>
+              <Button type="submit" variant="primary" className="mt-3">Post It <i className="fa fa-check fa-fw"></i></Button>
             </Col>
           </Row>
         </Form>

@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 let Travels = new Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -26,7 +30,7 @@ let Travels = new Schema(
     timestamp: {
       type: Date,
       default: Date.now,
-    }
+    },
   },
   {
     collection: 'travels'
