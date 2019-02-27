@@ -1,3 +1,8 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.file-upload-hover:hover {
+  background: #f0f0f0;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+}

@@ -46,7 +46,7 @@ async function loginAuth(req, res, next) {
   }
 };
 
-async function getUser(req, res, next) {
+async function getUsers(req, res, next) {
   await Users
     .find()
     .sort({ _id: -1 })
@@ -92,7 +92,7 @@ async function deleteUser(req, res, next) {
 }
 
 module.exports = {
-  getUser,
+  getUsers,
   saveUser,
   loginAuth,
   deleteUser,

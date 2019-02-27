@@ -1,10 +1,13 @@
-// const corsPrefetch = require('cors-prefetch-middleware');
-// const imagesUpload = require('images-upload-middleware');
+const config = require('../config/database');
+const Travels = require('../models/travelModel');
 
-// async function tempoUpload() {
-//   imagesUpload()
-// }
+async function getTravels(req, res, next) {
+  await Travels
+    .find()
+    .sort({ _id: -1 })
+    .then(result => res.json(result));
+};
 
-// module.exports = {
-//   tempoUpload,
-// }
+module.exports= {
+  getTravels,
+};

@@ -29,7 +29,8 @@ app
 require('./api/auth/passport')(passport);
 
 app
-  .use('/api/users', require('./api/routes/userRoute'));
+  .use('/api/users', require('./api/routes/userRoute'))
+  .use('/api/travels', require('./api/routes/travelRoute'));
 
 
 app.listen(port, (err) => {
