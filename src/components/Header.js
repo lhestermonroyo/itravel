@@ -31,8 +31,8 @@ class Header extends Component {
             </Nav>
             {isAuthenticated ? 
             <Nav>
-              <Link to="/dashboard" style={{textDecoration: 'none'}}>
-                <Nav.Link href="/dashboard">Home</Nav.Link>            
+              <Link to="/home" style={{textDecoration: 'none'}}>
+                <Nav.Link href="/home">Home</Nav.Link>            
               </Link>
               <Link to="/post-travel" style={{textDecoration: 'none'}}>
                 <Nav.Link href="/post-travel">Post Travel Destination</Nav.Link>            

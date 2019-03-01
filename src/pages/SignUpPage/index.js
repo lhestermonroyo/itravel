@@ -21,7 +21,7 @@ class SignUpPage extends Component {
   }
   componentDidMount() {
     if(this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/home');
     }
   }
   handleChange(e) {
@@ -48,7 +48,7 @@ class SignUpPage extends Component {
   render() {
     const { alertToggle, alertMessage, alertType } = this.props.auth;
     return (
-      <Container>
+      <Container className="mb-5">
         <Row>
           <Col md={4}></Col>
           <Col md={4}>

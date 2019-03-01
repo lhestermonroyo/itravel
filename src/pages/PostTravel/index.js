@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Container, Form, FormGroup, FormLabel, FormControl, Button, Row, Col, Card, Image } from 'react-bootstrap';
+import { saveTravel } from '../../actions/travelActions';
 import { removeButtonStyle, fileUploadStyle } from './styles';
-
 class PostTravel extends Component {
   constructor() {
     super();
@@ -12,6 +14,7 @@ class PostTravel extends Component {
       location: '',
       type: '',
       photos: [],
+      photosName: [],
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,15 +29,17 @@ class PostTravel extends Component {
   }
   handlePhotos(e) {
     let imgArray = [];
+    let imgNameArray = [];
     let imgCount = e.target.files.length;
   
-    console.log("Count:", imgCount);
 
     for(let i = 0; i < imgCount; i++) {
       imgArray[i] = e.target.files[i];
+      imgNameArray[i] = e.target.files[i].name;
     }
     this.setState({
       photos: this.state.photos.concat(imgArray),
+      photosName: this.state.photosName.concat(imgNameArray),
     });
   }
   handleRemove(p) {
@@ -44,22 +49,27 @@ class PostTravel extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
+    const { user } = this.props.auth;
+    const { name, description, location, type, photos, photosName } = this.state;
 
-    const newTravel = {
-      userId: '',
-      name: this.state.name,
-      description: this.state.description,
-      location: this.state.location,
-      type: this.state.type,
-      photos: this.state.photos,
-    };
+    this.state.photos.map(photo => console.log(photo));
+    const travelData = new FormData();
+    travelData.append('userId', user._id);
+    travelData.append('name', name);
+    travelData.append('description', description);
+    travelData.append('location', location);
+    travelData.append('type', type);
+    
+    for(let i = 0; i < photos.length; i++) {
+      travelData.append('uploadPhotos', photos[i], photosName[i]);
+    }
 
-    console.log("New travel:", newTravel);
+    this.props.saveTravel(travelData, this.props.history);
   }
-  render() {
-    const { photos } = this.state;
+  render() {  
+    const { photos, photosName } = this.state;
     return (
-      <Container>
+      <Container className="mb-5">
         <p className="display-4" style={{marginBottom: -6}}>Post Travel Destination</p>
         <small className="text-secondary">Promote your choosen travel destination by filling it's details below.</small>
         <Form className="mt-4" onSubmit={this.handleSubmit}>
@@ -96,7 +106,7 @@ class PostTravel extends Component {
                 <FormLabel style={{display: 'block'}}>Upload Photos:</FormLabel>
                 <label className="file-upload-hover" style={fileUploadStyle}>
                   <i className="fa fa-plus fa-fw fa-3x"></i>
-                  <FormControl type="file" onChange={this.handlePhotos} style={{display: 'none'}} multiple accept='image/*'></FormControl>
+                  <FormControl type="file" onChange={this.handlePhotos} name="uploadPhotos" style={{display: 'none'}} multiple accept='image/*'></FormControl>
                 </label>
               </FormGroup>
             </Col>
@@ -127,5 +137,13 @@ class PostTravel extends Component {
   }
 }
 
+PostTravel.propTypes = {
+  saveTravel: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
 
-export default PostTravel;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { saveTravel })(PostTravel);
