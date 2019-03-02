@@ -54,13 +54,15 @@ async function getUsers(req, res, next) {
 };
 
 async function saveUser(req, res, next) {
-  const { fullname, username, password } = req.body;
+  const { fullname, email, username, password, userType } = req.body;
 
   if(fullname.length !== 0 && username !== 0 && password !== 0) {
     const newUser = new Users({
       fullname: fullname,
+      email: email,
       username: username,
       password: password,
+      userType: userType,
     });
 
     bcrypt.genSalt(10, (err, salt) => {

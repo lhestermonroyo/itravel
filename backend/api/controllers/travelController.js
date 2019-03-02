@@ -54,9 +54,9 @@ async function saveTravel(req, res, next) {
         imgArray[i] = req.files[i].path;
       }
 
-      const { userId, name, description, location, type } = req.body;
+      const { userPosted, name, description, location, type } = req.body;
       const newTravel = new Travels({
-        userId: userId,
+        userPosted: userPosted,
         name: name,
         description: description,
         location: location,

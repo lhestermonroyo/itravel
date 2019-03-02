@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Card, } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';  
+import Sidebar from '../../components/Sidebar';
+import TravelFeed from './TravelFeed';
 
 class DashboardPage extends Component {
   constructor(props) {
@@ -18,7 +20,14 @@ class DashboardPage extends Component {
     const { user } = this.props.auth;
     return (
       <Container className="mb-5">
-        <p className="display-4 text-center">Hi, {user.fullname}, Welcome to Dashboard</p>
+        <Row>
+          <Col md={8}>
+            <TravelFeed></TravelFeed>
+          </Col>
+          <Col md={4}>
+            <Sidebar></Sidebar>
+          </Col>
+        </Row>
       </Container>
     )
   }

@@ -54,7 +54,7 @@ class PostTravel extends Component {
 
     this.state.photos.map(photo => console.log(photo));
     const travelData = new FormData();
-    travelData.append('userId', user._id);
+    travelData.append('userPosted', user.fullname);
     travelData.append('name', name);
     travelData.append('description', description);
     travelData.append('location', location);
@@ -67,71 +67,76 @@ class PostTravel extends Component {
     this.props.saveTravel(travelData, this.props.history);
   }
   render() {  
-    const { photos, photosName } = this.state;
+    const { photos } = this.state;
+    const { loading } = this.props.travel;
     return (
       <Container className="mb-5">
         <p className="display-4" style={{marginBottom: -6}}>Post Travel Destination</p>
         <small className="text-secondary">Promote your choosen travel destination by filling it's details below.</small>
-        <Form className="mt-4" onSubmit={this.handleSubmit}>
-          <Row>
-            <Col md={12}>
-              <FormGroup>
-                <FormControl type="text" name="name" onChange={this.handleChange} value={this.state.name} placeholder="Destination Name"></FormControl>
-              </FormGroup>
-            </Col>
-            <Col md={12}>
-              <FormGroup>
-                <FormControl as="textarea" name="description" onChange={this.handleChange} value={this.state.description} rows={5} placeholder="Description"></FormControl>
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <FormControl type="text" name="location" onChange={this.handleChange} value={this.state.location} placeholder="Location"></FormControl>
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <FormControl as="select" onChange={this.handleChange} name="type">
-                  <option value="Beaches, tropical island, scuba diving, etc..">Beaches, tropical island, scuba diving, etc..</option>
-                  <option value="Hiking, camping areas, mountains, forest, etc..">Hiking, camping areas, mountains, forest, etc..</option>
-                  <option value="National parks or parks">National parks or parks</option>
-                  <option value="Landmarks, historical places, monuments">Landmarks, historical places, monuments</option>
-                  <option value="Museums and art galleries">Museums and art galleries</option>
-                  <option selected="selected">Destination Type</option>
-                </FormControl>
-              </FormGroup>
-            </Col>
-            <Col md={3}>
-              <FormGroup>
-                <FormLabel style={{display: 'block'}}>Upload Photos:</FormLabel>
-                <label className="file-upload-hover" style={fileUploadStyle}>
-                  <i className="fa fa-plus fa-fw fa-3x"></i>
-                  <FormControl type="file" onChange={this.handlePhotos} name="uploadPhotos" style={{display: 'none'}} multiple accept='image/*'></FormControl>
-                </label>
-              </FormGroup>
-            </Col>
-            {photos.length !== 0 ? (
-              <Card style={{background: '#f0f0f0'}}>
-                <Card.Body>
-                  <Row>
-                  {photos.map((photo, i) => 
-                    <Col md={3} key={i}>
-                      <Button style={removeButtonStyle} onClick={e => this.handleRemove(photo)} size="sm" variant="outline-danger"><i className="fa fa-times fa-fw"></i></Button>
-                      <Image src={URL.createObjectURL(photo)} className="mb-2" alt={photo.name} rounded thumbnail width="100%"></Image>
-                    </Col>
-                  )}
-                  </Row>
-                </Card.Body>
-              </Card>
-              )
-              :
-              null
-            }
-            <Col md={12}>
-              <Button type="submit" variant="primary" className="mt-3">Post It <i className="fa fa-check fa-fw"></i></Button>
-            </Col>
-          </Row>
-        </Form>
+        {loading ?
+          <p className="text-center lead"><i className="fa fa-spinner fa-fw fa-pulse"></i> Loading...</p>
+          :
+          <Form className="mt-4" onSubmit={this.handleSubmit}>
+            <Row>
+              <Col md={12}>
+                <FormGroup>
+                  <FormControl type="text" name="name" onChange={this.handleChange} value={this.state.name} placeholder="Destination Name"></FormControl>
+                </FormGroup>
+              </Col>
+              <Col md={12}>
+                <FormGroup>
+                  <FormControl as="textarea" name="description" onChange={this.handleChange} value={this.state.description} rows={5} placeholder="Description"></FormControl>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <FormControl type="text" name="location" onChange={this.handleChange} value={this.state.location} placeholder="Location"></FormControl>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <FormControl as="select" onChange={this.handleChange} name="type">
+                    <option value="Beaches, tropical island, scuba diving, etc..">Beaches, tropical island, scuba diving, etc..</option>
+                    <option value="Hiking, camping areas, mountains, forest, etc..">Hiking, camping areas, mountains, forest, etc..</option>
+                    <option value="National parks or parks">National parks or parks</option>
+                    <option value="Landmarks, historical places, monuments">Landmarks, historical places, monuments</option>
+                    <option value="Museums and art galleries">Museums and art galleries</option>
+                    <option selected="selected">Destination Type</option>
+                  </FormControl>
+                </FormGroup>
+              </Col>
+              <Col md={3}>
+                <FormGroup>
+                  <FormLabel style={{display: 'block'}}>Upload Photos:</FormLabel>
+                  <label className="file-upload-hover" style={fileUploadStyle}>
+                    <i className="fa fa-plus fa-fw fa-3x"></i>
+                    <FormControl type="file" onChange={this.handlePhotos} name="uploadPhotos" style={{display: 'none'}} multiple accept='image/*'></FormControl>
+                  </label>
+                </FormGroup>
+              </Col>
+              {photos.length !== 0 ? (
+                <Card style={{background: '#f0f0f0'}}>
+                  <Card.Body>
+                    <Row>
+                    {photos.map((photo, i) => 
+                      <Col md={3} key={i}>
+                        <Button style={removeButtonStyle} onClick={e => this.handleRemove(photo)} size="sm" variant="outline-danger"><i className="fa fa-times fa-fw"></i></Button>
+                        <Image src={URL.createObjectURL(photo)} className="mb-2" alt={photo.name} rounded thumbnail width="100%"></Image>
+                      </Col>
+                    )}
+                    </Row>
+                  </Card.Body>
+                </Card>
+                )
+                :
+                null
+              }
+              <Col md={12}>
+                <Button type="submit" variant="primary" size="lg" className="mt-3">Promote Destination</Button>
+              </Col>
+            </Row>
+          </Form>
+        }
       </Container>
     )
   }
@@ -140,10 +145,13 @@ class PostTravel extends Component {
 PostTravel.propTypes = {
   saveTravel: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  travel: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  travel: state.travel,
 });
 
 export default connect(mapStateToProps, { saveTravel })(PostTravel);

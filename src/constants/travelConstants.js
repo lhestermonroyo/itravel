@@ -1,1 +1,1 @@
-export const SAVE_TRAVEL = 'SAVE_TRAVEL';
+export const GET_TRAVEL = 'GET_TRAVEL';

@@ -7,12 +7,24 @@ let Users = new Schema(
       type: String,
       required: true,
     },
+    email: {
+      type: String,
+      required: true,
+    },
     username: {
       type: String,
       required: true,
     },
     password: {
       type: String,
+      required: true,
+    },
+    userType: {
+      type: String,
+      required: true,
+    },
+    rating: {
+      type: Array,
       required: true,
     },
     timestamp: {

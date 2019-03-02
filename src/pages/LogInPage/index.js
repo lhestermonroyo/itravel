@@ -43,7 +43,7 @@ class LogInPage extends Component {
     this.props.loginUser(userData);
   }
   render() {
-    const { alertToggle, alertMessage, alertType } = this.props.auth;
+    const { alertToggle, alertMessage, alertType, loading } = this.props.auth;
     return (
       <Container className="mb-5">
         <Row>
@@ -54,21 +54,25 @@ class LogInPage extends Component {
               <AlertToggle toggle={alertToggle} type={alertType} message={alertMessage}></AlertToggle> 
               : null
             }
-            <Form onSubmit={this.handleSubmit}>
-              <FormGroup>
-                <FormLabel>Username:</FormLabel>
-                <FormControl type="text" name="username" onChange={this.handleChange} value={this.state.username}></FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormLabel>Password:</FormLabel>
-                <FormControl type="password" name="password" onChange={this.handleChange} value={this.state.password}></FormControl>
-              </FormGroup>
-              <Button type="submit" variant="primary" block>Log In</Button>
-              <p className="text-center mt-5">
-                Don't have an account?
-                <Button className="ml-2" variant="outline-primary">Sign Up</Button>
-              </p>
-            </Form>
+            {loading ? 
+              <p className="text-center lead"><i className="fa fa-spinner fa-fw fa-pulse"></i> Loading...</p>
+              :
+              <Form onSubmit={this.handleSubmit}>
+                <FormGroup>
+                  <FormLabel>Username:</FormLabel>
+                  <FormControl type="text" name="username" onChange={this.handleChange} value={this.state.username}></FormControl>
+                </FormGroup>
+                <FormGroup>
+                  <FormLabel>Password:</FormLabel>
+                  <FormControl type="password" name="password" onChange={this.handleChange} value={this.state.password}></FormControl>
+                </FormGroup>
+                <Button type="submit" variant="primary" size="lg" block>Log In</Button>
+                <p className="text-center mt-5">
+                  Don't have an account?
+                  <Button className="ml-2" variant="outline-primary">Sign Up</Button>
+                </p>
+              </Form>
+            }
           </Col>
           <Col md={4}></Col>
         </Row>
@@ -80,6 +84,7 @@ class LogInPage extends Component {
 LogInPage.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({

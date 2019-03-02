@@ -1,9 +1,9 @@
-import { SAVE_TRAVEL } from '../constants/travelConstants';
+import { GET_TRAVEL } from '../constants/travelConstants';
 import { ALERT_TOGGLE_SHOW, ALERT_TOGGLE_HIDE } from '../constants/alertConstants';
+import { LOADING_TOGGLE_SHOW, LOADING_TOGGLE_HIDE } from '../constants/loadingConstants';
 
 const initialState = {
   travel: [],
-  newTravel: {},
   loading: false,
   alertToggle: false,
   alertMessage: '',
@@ -25,11 +25,21 @@ export default function(state = initialState, action) {
         ...state,
         alertToggle: false,
       }
-    case SAVE_TRAVEL:
+    case LOADING_TOGGLE_SHOW:
+      return {
+        ...state,
+        loading: true,
+      }
+    case LOADING_TOGGLE_HIDE:
+      return {
+        ...state,
+        loading: false,
+      }
+    case GET_TRAVEL:
       console.log(action.payload);
       return {
         ...state,
-        newTravel: action.payload,
+        travel: action.payload,
       }
     default:
       return {

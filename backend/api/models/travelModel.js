@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 let Travels = new Schema(
   {
-    userId: {
+    userPosted: {
       type: String,
       required: true,
     },
@@ -24,6 +24,14 @@ let Travels = new Schema(
       required: true,
     },
     photos: {
+      type: Array,
+      required: true,
+    },
+    ratings: {
+      type: Array,
+      required: true,
+    },
+    comments: {
       type: Array,
       required: true,
     },

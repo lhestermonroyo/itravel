@@ -1,5 +1,6 @@
 import { SET_CURRENT_USER } from '../constants/userConstants';
 import { ALERT_TOGGLE_SHOW, ALERT_TOGGLE_HIDE } from '../constants/alertConstants';
+import { LOADING_TOGGLE_SHOW, LOADING_TOGGLE_HIDE } from '../constants/loadingConstants';
 const isEmpty = require('is-empty');
 const initialState = {
   isAuthenticated: false,
@@ -24,6 +25,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         alertToggle: false,
+      }
+    case LOADING_TOGGLE_SHOW:
+      return {
+        ...state,
+        loading: true,
+      }
+    case LOADING_TOGGLE_HIDE:
+      return {
+        ...state,
+        loading: false,
       }
     case SET_CURRENT_USER:
       return {

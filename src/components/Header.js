@@ -18,48 +18,53 @@ class Header extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
     return (
-      <Navbar collapseOnSelect className="mb-3" expand="lg" variant="dark" bg="dark">
-        <Container>
-          <Navbar.Brand href="#home"><i className="fa fa-angle-double-up fa-fw"></i> iTravel</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav"></Navbar.Toggle>
-          <Navbar.Collapse id="responsive-navbar-nav"> 
-            <Nav className="mr-auto">
-            <Form inline>
-            <FormControl type="text" style={navbarSearch} placeholder="Search for places, landmarks, etc..." className="mr-sm-2" />
-            <Button variant="outline-primary"><i className="fa fa-search fa-fw"></i></Button>
-          </Form>
-            </Nav>
-            {isAuthenticated ? 
-            <Nav>
-              <Link to="/home" style={{textDecoration: 'none'}}>
-                <Nav.Link href="/home">Home</Nav.Link>            
-              </Link>
-              <Link to="/post-travel" style={{textDecoration: 'none'}}>
-                <Nav.Link href="/post-travel">Post Travel Destination</Nav.Link>            
-              </Link>
-              <NavDropdown title={user.fullname} id="basic-nav-dropdown">
-                <NavDropdown.Item href=""><i className="fa fa-user-circle fa-fw"></i> Profile</NavDropdown.Item>
-                <NavDropdown.Item href=""><i className="fa fa-cog fa-fw"></i> Account Settings</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={this.handleLogOut}><i className="fa fa-sign-out-alt fa-fw"></i> Log Out</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-            :
-            <Nav>
-              <Link to="/" style={{textDecoration: 'none'}}>
-                <Nav.Link href="/">Home</Nav.Link>            
-              </Link>
-              <Link to="/login" style={{textDecoration: 'none'}}>
-                <Nav.Link href="/login">Log In</Nav.Link>            
-              </Link>
-              <Link to="/signup" style={{textDecoration: 'none'}}>
-                <Nav.Link href="/signup">Sign Up</Nav.Link>            
-              </Link>
-            </Nav>
-            }
-          </Navbar.Collapse> 
-        </Container>
-      </Navbar>
+      <div style={{marginBottom: '4.5rem'}}>
+        <Navbar fixed="top" collapseOnSelect className="mb-3" expand="lg" variant="dark" bg="dark">
+          <Container>
+            <Navbar.Brand href="#home"><i className="fa fa-angle-double-up fa-fw"></i> iTravel</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav"></Navbar.Toggle>
+            <Navbar.Collapse id="responsive-navbar-nav"> 
+              <Nav className="mr-auto">
+              <Form inline>
+              <FormControl type="text" style={navbarSearch} placeholder="Search for places, landmarks, promoters, etc..." className="mr-sm-2" />
+              <Button variant="outline-primary"><i className="fa fa-search fa-fw"></i></Button>
+            </Form>
+              </Nav>
+              {isAuthenticated ? 
+              <Nav>
+                <Link to="/home" style={{textDecoration: 'none'}}>
+                  <Nav.Link href="/home" title="Home"><i className="fa fa-home fa-fw"></i></Nav.Link>            
+                </Link>
+                <Link to="/post-travel" style={{textDecoration: 'none'}}>
+                  <Nav.Link href="/post-travel" title="Post Travel Destination"><i className="fa fa-pencil-alt fa-fw"></i></Nav.Link>            
+                </Link>
+                <Link to="/notifications" style={{textDecoration: 'none'}}>
+                  <Nav.Link href="/notifications" title="Notifications"><i className="fa fa-bell fa-fw"></i></Nav.Link>
+                </Link>
+                <NavDropdown title={user.fullname} id="basic-nav-dropdown">
+                  <NavDropdown.Item href=""><i className="fa fa-user-circle fa-fw"></i> Profile</NavDropdown.Item>
+                  <NavDropdown.Item href=""><i className="fa fa-cog fa-fw"></i> Account Settings</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={this.handleLogOut}><i className="fa fa-sign-out-alt fa-fw"></i> Log Out</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+              :
+              <Nav>
+                <Link to="/" style={{textDecoration: 'none'}}>
+                  <Nav.Link href="/">Home</Nav.Link>            
+                </Link>
+                <Link to="/login" style={{textDecoration: 'none'}}>
+                  <Nav.Link href="/login">Log In</Nav.Link>            
+                </Link>
+                <Link to="/signup" style={{textDecoration: 'none'}}>
+                  <Nav.Link href="/signup">Sign Up</Nav.Link>            
+                </Link>
+              </Nav>
+              }
+            </Navbar.Collapse> 
+          </Container>
+        </Navbar>
+      </div>
     );
   }
 }
