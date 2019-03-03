@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_TRAVEL } from '../constants/travelConstants';
+import { GET_TRAVELS, GET_TRAVEL_BY_ID } from '../constants/travelConstants';
 import { ALERT_TOGGLE_SHOW, ALERT_TOGGLE_HIDE } from '../constants/alertConstants';
 import { LOADING_TOGGLE_SHOW, LOADING_TOGGLE_HIDE } from '../constants/loadingConstants';
 
@@ -25,17 +25,30 @@ export const saveTravel = (travelData, history) => (dispatch) => {
     .catch(err => console.log(err));
 }
 
-export const getTravel = () => (dispatch) => {
+export const getTravels = () => (dispatch) => {
   dispatch(loadingToggleShow());
   axios
     .get('http://localhost:5000/api/travels')
     .then(res => {
-      console.log(res.data);
       dispatch(loadingToggleHide());
       dispatch({
-        type: GET_TRAVEL,
+        type: GET_TRAVELS,
         payload: res.data,
       });
+    })
+    .catch(err => console.log(err));
+}
+
+export const getTravelByID = (id) => (dispatch) => {
+  dispatch(loadingToggleShow());
+  axios
+    .get(`http://localhost:5000/api/travels/${id}`)
+    .then(res => {
+      dispatch(loadingToggleHide());
+      dispatch({
+        type: GET_TRAVEL_BY_ID,
+        payload: res.data,
+      })
     })
     .catch(err => console.log(err));
 }

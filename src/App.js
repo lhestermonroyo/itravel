@@ -14,6 +14,7 @@ import LogInPage from './pages/LogInPage';
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
 import PostTravel from './pages/PostTravel';
+import TravelPost from './pages/HomePage/TravelPost';
 
 if(localStorage.jwtToken) {
   const token = localStorage.jwtToken;
@@ -39,6 +40,7 @@ class App extends Component {
             <Route exact path="/login" component={LogInPage}></Route>
             <Route exact path="/signup" component={SignUpPage}></Route>
             <PrivateRoute exact path='/home' component={HomePage}></PrivateRoute>
+            <PrivateRoute exact path='/travel/:id' component={TravelPost}></PrivateRoute>
             <PrivateRoute exact path='/post-travel' component={PostTravel}></PrivateRoute>
           </Switch>
         </Provider>

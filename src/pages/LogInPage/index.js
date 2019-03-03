@@ -44,6 +44,7 @@ class LogInPage extends Component {
   }
   render() {
     const { alertToggle, alertMessage, alertType, loading } = this.props.auth;
+    console.log(loading);
     return (
       <Container className="mb-5">
         <Row>

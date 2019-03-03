@@ -38,6 +38,7 @@ export const loginUser = (userData) => (dispatch) => {
         dispatch(loadingToggleHide());
       }
       else {
+        dispatch(loadingToggleHide());
         dispatch(alertToggleShow(res.data));
       }
     })

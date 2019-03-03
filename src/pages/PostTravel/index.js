@@ -4,6 +4,15 @@ import PropTypes from 'prop-types';
 import { Container, Form, FormGroup, FormLabel, FormControl, Button, Row, Col, Card, Image } from 'react-bootstrap';
 import { saveTravel } from '../../actions/travelActions';
 import { removeButtonStyle, fileUploadStyle } from './styles';
+
+const types = [
+  "Beaches, tropical island, scuba diving, etc..",
+  "Hiking, camping areas, mountains, forest, etc..",
+  "National parks or parks",
+  "Landmarks, monuments, cultural and historical places",
+  "Museums and art galleries",
+];
+
 class PostTravel extends Component {
   constructor() {
     super();
@@ -96,11 +105,7 @@ class PostTravel extends Component {
               <Col md={6}>
                 <FormGroup>
                   <FormControl as="select" onChange={this.handleChange} name="type">
-                    <option value="Beaches, tropical island, scuba diving, etc..">Beaches, tropical island, scuba diving, etc..</option>
-                    <option value="Hiking, camping areas, mountains, forest, etc..">Hiking, camping areas, mountains, forest, etc..</option>
-                    <option value="National parks or parks">National parks or parks</option>
-                    <option value="Landmarks, historical places, monuments">Landmarks, historical places, monuments</option>
-                    <option value="Museums and art galleries">Museums and art galleries</option>
+                    {types.map(type => <option value={type}>{type}</option>)}
                     <option selected="selected">Destination Type</option>
                   </FormControl>
                 </FormGroup>

@@ -38,8 +38,19 @@ async function getTravels(req, res, next) {
   await Travels
     .find()
     .sort({ _id: -1 })
-    .then(result => res.json(result));
+    .then(result => res.json(result))
+    .catch(err => console.log(err));
 };
+
+async function getTravelsById(req, res, next) {
+  const { id } = req.params;
+  await Travels
+    .findById(id)
+    .then(result => {
+      res.json(result);
+    })
+    .catch(err => console.log(err));
+}
 
 async function saveTravel(req, res, next) {
   await upload.array('uploadPhotos')(req, res, (err) => {
@@ -86,6 +97,7 @@ async function deleteTravel(req, res, next) {
 
 module.exports= {
   getTravels,
+  getTravelsById,
   saveTravel,
   deleteTravel,
 };

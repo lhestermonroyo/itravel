@@ -1,8 +1,9 @@
-import { GET_TRAVEL } from '../constants/travelConstants';
+import { GET_TRAVELS, GET_TRAVEL_BY_ID } from '../constants/travelConstants';
 import { ALERT_TOGGLE_SHOW, ALERT_TOGGLE_HIDE } from '../constants/alertConstants';
 import { LOADING_TOGGLE_SHOW, LOADING_TOGGLE_HIDE } from '../constants/loadingConstants';
 
 const initialState = {
+  travels: [],
   travel: [],
   loading: false,
   alertToggle: false,
@@ -35,8 +36,12 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
       }
-    case GET_TRAVEL:
-      console.log(action.payload);
+    case GET_TRAVELS:
+      return {
+        ...state,
+        travels: action.payload,
+      }
+    case GET_TRAVEL_BY_ID:
       return {
         ...state,
         travel: action.payload,
