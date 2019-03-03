@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Form, FormGroup, FormLabel, FormControl, Button, Row, Col, Card, Image } from 'react-bootstrap';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { saveTravel } from '../../actions/travelActions';
 import { removeButtonStyle, fileUploadStyle } from './styles';
 
@@ -68,7 +70,8 @@ class PostTravel extends Component {
     travelData.append('description', description);
     travelData.append('location', location);
     travelData.append('type', type);
-    
+
+    console.log(travelData);
     for(let i = 0; i < photos.length; i++) {
       travelData.append('uploadPhotos', photos[i], photosName[i]);
     }
@@ -89,24 +92,39 @@ class PostTravel extends Component {
             <Row>
               <Col md={12}>
                 <FormGroup>
-                  <FormControl type="text" name="name" onChange={this.handleChange} value={this.state.name} placeholder="Destination Name"></FormControl>
+                  <FormLabel>Destination Name:</FormLabel>
+                  <FormControl type="text" name="name" onChange={this.handleChange} value={this.state.name}></FormControl>
                 </FormGroup>
               </Col>
               <Col md={12}>
+                <FormLabel>Description:</FormLabel>
                 <FormGroup>
-                  <FormControl as="textarea" name="description" onChange={this.handleChange} value={this.state.description} rows={5} placeholder="Description"></FormControl>
+                  <CKEditor
+                    editor={ ClassicEditor }
+                    data={this.state.description}
+                    name="description"
+                    onChange={ ( event, editor ) => {
+                        const data = editor.getData();
+                        this.setState({
+                          description: data,
+                        });
+                        console.log(this.state.description);
+                    } }
+                  />
                 </FormGroup>
               </Col>
               <Col md={6}>
                 <FormGroup>
+                  <FormLabel>Location:</FormLabel>
                   <FormControl type="text" name="location" onChange={this.handleChange} value={this.state.location} placeholder="Location"></FormControl>
                 </FormGroup>
               </Col>
               <Col md={6}>
                 <FormGroup>
+                  <FormLabel>Destination Type:</FormLabel>
                   <FormControl as="select" onChange={this.handleChange} name="type">
                     {types.map(type => <option value={type}>{type}</option>)}
-                    <option selected="selected">Destination Type</option>
+                    <option selected="selected"></option>
                   </FormControl>
                 </FormGroup>
               </Col>

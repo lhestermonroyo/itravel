@@ -24,7 +24,9 @@ class TravelFeed extends Component {
                 </p>
               </Link>
               <small className="text-secondary"><i className="fa fa-clock fa-fw"></i> {new Date(timestamp).toLocaleTimeString()} - {new Date(timestamp).toDateString()} &bull; <i className="fa fa-user-circle fa-fw"></i> {userPosted}</small>
-              <p className="mt-3">{description.length >= 200 ? description.substring(0, 200).trim()+'...' : description} <Link to={`/travel/${_id}`}>View Full Post</Link></p>
+              <div style={{marginBottom: -7}} className="mt-3" dangerouslySetInnerHTML={ description.length >= 184 ? {__html: description.substring(0, 184).trim()+'...'} : { __html: description } }>
+              </div>
+              <Link className="btn btn-primary mb-3" to={`/travel/${_id}`}>View Full Post <i className="fa fa-chevron-right fa-fw"></i></Link>
               <Carousel>
                 {photos.map((photo, i) => 
                   <Carousel.Item>

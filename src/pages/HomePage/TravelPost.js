@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTravelByID } from '../../actions/travelActions';
-import { type } from 'os';
 
 class TravelPost extends Component {
   componentDidMount() {
@@ -13,7 +12,7 @@ class TravelPost extends Component {
   showTravel() { 
     const { travel, loading } = this.props.travel; 
     const { _id, name, location, timestamp, userPosted, description, photos } = travel;
-
+    // document.getElementById('desc').innerHTML = description;
     return (
       <Card key={_id}>
         <Card.Body>
@@ -41,11 +40,22 @@ class TravelPost extends Component {
             </Col>
             <Col md={1}></Col>
           </Row>
-          <p className="text-primary" style={{marginBottom: -4}}>
-            <span className="lead"><strong>{name}</strong></span> <span>(<i className="fa fa-map-marker-alt fa-fw"></i>{location})</span>
-          </p>
-          <p className="text-secondary"><i className="fa fa-clock fa-fw"></i> {new Date(timestamp).toLocaleTimeString()} - {new Date(timestamp).toDateString()} &bull; <i className="fa fa-user-circle fa-fw"></i> {userPosted}</p>
-          <p className="mt-3">{description}</p>
+          <Row>
+            <Col md={8}>
+              <p className="text-primary" style={{marginBottom: -4}}>
+                <span className="lead"><strong>{name}</strong></span> <span>(<i className="fa fa-map-marker-alt fa-fw"></i>{location})</span>
+              </p>
+              <p className="text-secondary"><i className="fa fa-clock fa-fw"></i> {new Date(timestamp).toLocaleTimeString()} - {new Date(timestamp).toDateString()} &bull; <i className="fa fa-user-circle fa-fw"></i> {userPosted}</p>
+              <div dangerouslySetInnerHTML={{ __html: description }}></div>
+            </Col>
+            <Col md={4}>
+              <p className="lead"><strong><i className="fa fa-info-circle fa-fw"></i> About Promoter</strong></p>
+              <p className="text-center">
+                <Image src="./uploads/placeholder.png" roundedCircle style={{width: 180, height: 'auto'}}></Image>
+              </p>
+              <p className="text-center text-primary lead"><strong>{userPosted}</strong></p>
+            </Col>
+          </Row>
         </Card.Body>
       </Card>
     )
