@@ -65,7 +65,7 @@ class PostTravel extends Component {
 
     this.state.photos.map(photo => console.log(photo));
     const travelData = new FormData();
-    travelData.append('userPosted', user.fullname);
+    travelData.append('userPosted', user._id);
     travelData.append('name', name);
     travelData.append('description', description);
     travelData.append('location', location);

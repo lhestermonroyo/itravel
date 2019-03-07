@@ -38,6 +38,7 @@ async function getTravels(req, res, next) {
   await Travels
     .find()
     .sort({ _id: -1 })
+    .populate('userPosted')
     .then(result => res.json(result))
     .catch(err => console.log(err));
 };
@@ -46,6 +47,7 @@ async function getTravelsById(req, res, next) {
   const { id } = req.params;
   await Travels
     .findById(id)
+    .populate('userPosted')
     .then(result => {
       res.json(result);
     })

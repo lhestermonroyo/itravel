@@ -23,6 +23,10 @@ let Users = new Schema(
       type: String,
       required: true,
     },
+    profilePhoto: {
+      type: String,
+      required: true,
+    },
     rating: {
       type: Array,
       required: true,

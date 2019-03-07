@@ -1,10 +1,11 @@
-import { GET_TRAVELS, GET_TRAVEL_BY_ID } from '../constants/travelConstants';
+import { GET_TRAVELS, GET_TRAVEL_BY_ID, GET_PROMOTER } from '../constants/travelConstants';
 import { ALERT_TOGGLE_SHOW, ALERT_TOGGLE_HIDE } from '../constants/alertConstants';
 import { LOADING_TOGGLE_SHOW, LOADING_TOGGLE_HIDE } from '../constants/loadingConstants';
 
 const initialState = {
   travels: [],
-  travel: [],
+  travel: {},
+  promoter: null,
   loading: false,
   alertToggle: false,
   alertMessage: '',
@@ -14,7 +15,6 @@ const initialState = {
 export default function(state = initialState, action) {
   switch(action.type) {
     case ALERT_TOGGLE_SHOW: 
-      console.log(action.payload);
       return {
         ...state,
         alertToggle: true,
@@ -45,6 +45,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         travel: action.payload,
+      }
+    case GET_PROMOTER:
+      return {
+        ...state,
+        promoter: action.payload,
       }
     default:
       return {

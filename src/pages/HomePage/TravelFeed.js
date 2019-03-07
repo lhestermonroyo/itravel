@@ -3,18 +3,20 @@ import { Card, Button, Image, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getTravels } from '../../actions/travelActions';
+import { getTravels, getPromoter } from '../../actions/travelActions';
 
 class TravelFeed extends Component {
   componentDidMount() {
-    this.props.getTravels();
+   this.props.getTravels();
   }
-  mapTravel() {
+  fetchTravels() {
     const { travels } = this.props.travel;
-    return travels.map(travel => {
-      const { _id, name, timestamp, userPosted, description, location, photos } = travel;
+
+    return travels.map((travel, i) => {
+      const { _id, name, location, timestamp, userPosted, description, photos, type } = travel;
+      const { fullname } = userPosted;
       return (
-        <div key={_id}>
+        <div key={i}>
           <Card className="mb-2">
             <Card.Body>
               <Button className="float-right" variant="light"><i className="fa fa-ellipsis-v fa-fw"></i></Button>
@@ -23,7 +25,7 @@ class TravelFeed extends Component {
                   <span className="lead"><strong>{name}</strong></span> <span>(<i className="fa fa-map-marker-alt fa-fw"></i>{location})</span>
                 </p>
               </Link>
-              <small className="text-secondary"><i className="fa fa-clock fa-fw"></i> {new Date(timestamp).toLocaleTimeString()} - {new Date(timestamp).toDateString()} &bull; <i className="fa fa-user-circle fa-fw"></i> {userPosted}</small>
+              <small className="text-secondary"><i className="fa fa-clock fa-fw"></i> {new Date(timestamp).toLocaleTimeString()} - {new Date(timestamp).toDateString()} &bull; <i className="fa fa-user-circle fa-fw"></i> {fullname}</small>
               <div style={{marginBottom: -7}} className="mt-3" dangerouslySetInnerHTML={ description.length >= 184 ? {__html: description.substring(0, 184).trim()+'...'} : { __html: description } }>
               </div>
               <Link className="btn btn-primary mb-3" to={`/travel/${_id}`}>View Full Post <i className="fa fa-chevron-right fa-fw"></i></Link>
@@ -50,16 +52,17 @@ class TravelFeed extends Component {
           </Card>
         </div>
       )
-    })
+      }
+    )
   }
   render() {
-    const { loading } = this.props.travel;
+    const { loading, travels } = this.props.travel;
     return (
       <div>
-        {loading ? 
-          <p className="text-center lead"><i className="fa fa-spinner fa-fw fa-pulse"></i> Loading...</p>
+        {!loading && travels ? 
+          this.fetchTravels()
           :
-          this.mapTravel()
+          <p className="text-center lead"><i className="fa fa-spinner fa-fw fa-pulse"></i> Loading...</p>
         }
       </div>
     )
@@ -68,6 +71,7 @@ class TravelFeed extends Component {
 
 TravelFeed.propTypes = {
   getTravels: PropTypes.func.isRequired,
+  getPromoter: PropTypes.func.isRequired,
   travel: PropTypes.object.isRequired,
 };
 
@@ -75,4 +79,4 @@ const mapStateToProps = (state) => ({
   travel: state.travel,
 })
 
-export default connect(mapStateToProps, { getTravels })(TravelFeed);
+export default connect(mapStateToProps, { getTravels, getPromoter })(TravelFeed);

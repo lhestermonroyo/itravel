@@ -50,8 +50,17 @@ async function getUsers(req, res, next) {
   await Users
     .find()
     .sort({ _id: -1 })
-    .then(result => res.json(result));
+    .then(result => res.json(result))
+    .catch(err => console.log(err));
 };
+
+async function getUserById(req, res, next) {
+  const { id } = req.params;
+  await Users
+    .findById(id)
+    .then(result => res.json(result))
+    .catch(err => console.log(err));
+}
 
 async function saveUser(req, res, next) {
   const { fullname, email, username, password, userType } = req.body;
@@ -63,6 +72,7 @@ async function saveUser(req, res, next) {
       username: username,
       password: password,
       userType: userType,
+      profilePhoto: 'uploads\\placeholder.png',
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -95,6 +105,7 @@ async function deleteUser(req, res, next) {
 
 module.exports = {
   getUsers,
+  getUserById,
   saveUser,
   loginAuth,
   deleteUser,

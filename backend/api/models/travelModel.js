@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 let Travels = new Schema(
   {
     userPosted: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'users',
       required: true,
     },
     name: {
@@ -27,10 +28,20 @@ let Travels = new Schema(
       type: Array,
       required: true,
     },
-    ratings: {
-      type: Array,
-      required: true,
-    },
+    ratings: [{
+      userRated: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'users',
+      },
+      rating: {
+        type: Number,
+        require: true,
+      },
+      timestamp: {
+        type: Date,
+        default: Date.now,
+      }
+    }],
     comments: {
       type: Array,
       required: true,
