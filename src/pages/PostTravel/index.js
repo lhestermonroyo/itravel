@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Container, Form, FormGroup, FormLabel, FormControl, Button, Row, Col, Card, Image } from 'react-bootstrap';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Script from 'react-load-script';
 import { saveTravel } from '../../actions/travelActions';
 import { removeButtonStyle, fileUploadStyle } from './styles';
 
@@ -26,9 +27,12 @@ class PostTravel extends Component {
       type: '',
       photos: [],
       photosName: [],
+      city: '',
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleScriptLoad = this.handleScriptLoad.bind(this);
+    this.handlePlaceSelect = this.handlePlaceSelect.bind(this);
     this.handlePhotos = this.handlePhotos.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,6 +41,36 @@ class PostTravel extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
+  }
+  handleScriptLoad() {
+    // Declare Options For Autocomplete
+    var options = {
+      types: ['(cities)'],
+    };
+
+    // Initialize Google Autocomplete
+    /*global google*/ // To disable any eslint 'google not defined' errors
+    this.autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('autocomplete'),
+      options,
+    );
+
+    // Fire Event when a suggested name is selected
+    this.autocomplete.addListener('place_changed', this.handlePlaceSelect);
+  }
+  handlePlaceSelect() {
+    // Extract City From Address Object
+    let addressObject = this.autocomplete.getPlace();
+    let address = addressObject.address_components;
+
+    // Check if address is valid
+    if (address) {
+      // Set State
+      this.setState({
+        city: address[0].long_name,
+        location: addressObject.formatted_address,
+      });
+    }
   }
   handlePhotos(e) {
     let imgArray = [];
@@ -116,7 +150,11 @@ class PostTravel extends Component {
               <Col md={6}>
                 <FormGroup>
                   <FormLabel>Location:</FormLabel>
-                  <FormControl type="text" name="location" onChange={this.handleChange} value={this.state.location} placeholder="Location"></FormControl>
+                  <Script
+                    url="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC3gTG6T0-GEcBN0GEwUJYRiUv-1O1tq0&libraries=places"
+                    onLoad={this.handleScriptLoad}
+                  />
+                  <FormControl type="text" name="location" id="autocomplete" onChange={this.handleChange} value={this.state.location}></FormControl>
                 </FormGroup>
               </Col>
               <Col md={6}>
@@ -124,7 +162,7 @@ class PostTravel extends Component {
                   <FormLabel>Destination Type:</FormLabel>
                   <FormControl as="select" onChange={this.handleChange} name="type">
                     {types.map(type => <option value={type}>{type}</option>)}
-                    <option selected="selected"></option>
+                    <option selected="selected">Select Destination Type</option>
                   </FormControl>
                 </FormGroup>
               </Col>

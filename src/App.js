@@ -14,7 +14,7 @@ import LogInPage from './pages/LogInPage';
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
 import PostTravel from './pages/PostTravel';
-import TravelPost from './pages/HomePage/TravelPost';
+import TravelPost from './pages/TravelPost';
 
 if(localStorage.jwtToken) {
   const token = localStorage.jwtToken;

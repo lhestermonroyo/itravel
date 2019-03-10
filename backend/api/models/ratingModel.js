@@ -1,31 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let Travels = new Schema(
+let Ratings = new Schema(
   {
-    userPosted: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'users',
       required: true,
     },
-    name: {
-      type: String,
+    travelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'travels',
       required: true,
     },
-    description: {
-      type: String,
+    rating: {
+      type: Number,
       required: true,
     },
-    location: {
+    comment: {
       type: String,
-      required: true,
-    },
-    type: {
-      type: String,
-      required: true,
-    },
-    photos: {
-      type: Array,
       required: true,
     },
     timestamp: {
@@ -34,8 +27,8 @@ let Travels = new Schema(
     },
   },
   {
-    collection: 'travels'
+    collection: 'ratings'
   }
 );
 
-module.exports = mongoose.model('travels', Travels);
+module.exports = mongoose.model('ratings', Ratings);

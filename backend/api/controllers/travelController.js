@@ -80,7 +80,7 @@ async function saveTravel(req, res, next) {
       newTravel
         .save()
         .then(result => res.json({ success: true, result }))
-        .catch(err => res.json({ success: false, message: 'An error occured while posting travel destionation.', type: 'danger'}));
+        .catch(err => res.json({ success: false, message: 'An error occured while posting travel destination.', type: 'danger'}));
     }
     else {
       res.json({ success: false, message: 'An error occured while posting travel destionation.', type: 'danger'})

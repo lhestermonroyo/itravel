@@ -30,7 +30,8 @@ require('./api/auth/passport')(passport);
 
 app
   .use('/api/users', require('./api/routes/userRoute'))
-  .use('/api/travels', require('./api/routes/travelRoute'));
+  .use('/api/travels', require('./api/routes/travelRoute'))
+  .use('/api/ratings', require('./api/routes/ratingRoute'));
 
 
 app.listen(port, (err) => {

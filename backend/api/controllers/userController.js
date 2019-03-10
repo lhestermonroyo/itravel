@@ -65,7 +65,7 @@ async function getUserById(req, res, next) {
 async function saveUser(req, res, next) {
   const { fullname, email, username, password, userType } = req.body;
 
-  if(fullname.length !== 0 && username !== 0 && password !== 0) {
+  if(fullname.length !== 0 && email.length !== 0 && username !== 0 && password !== 0) {
     const newUser = new Users({
       fullname: fullname,
       email: email,
@@ -94,6 +94,38 @@ async function saveUser(req, res, next) {
   }
 };
 
+async function updateUser(req, res, next) {
+  const { id } = req.params;
+  const { fullname, email, username, password, userType } = req.body;
+
+  if(fullname.length !== 0 && email.length !== 0 && username !== 0 && password !== 0) {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, async (err, hash) => {
+        if(err) {
+          console.log(err);
+        }
+
+        const updatedUser = {
+          fullname: fullname,
+          email: email,
+          username: username,
+          password: hash,
+          userType: userType,
+          profilePhoto: 'uploads\\placeholder.png',
+        };
+        
+        Users
+          .findByIdAndUpdate(id, updatedUser)
+          .then(result => res.json(updatedUser))
+          .catch(err => res.json(err));
+          });
+    })
+  }  
+  else {
+    res.json({ success: false, message: 'Please fill in all fields.', type: 'danger'});
+  }
+}
+
 async function deleteUser(req, res, next) {
   const { id } = req.params;
 
@@ -107,6 +139,7 @@ module.exports = {
   getUsers,
   getUserById,
   saveUser,
+  updateUser,
   loginAuth,
   deleteUser,
 };

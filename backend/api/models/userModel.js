@@ -27,10 +27,6 @@ let Users = new Schema(
       type: String,
       required: true,
     },
-    rating: {
-      type: Array,
-      required: true,
-    },
     timestamp: {
       type: Date,
       default: Date.now,

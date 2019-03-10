@@ -47,7 +47,7 @@ class TravelFeed extends Component {
             <Card.Footer>
               <Button variant="light"><i className="fa fa-star fa-fw"></i> Rate It</Button>
               <Button variant="light"><i className="fa fa-comment-alt fa-fw"></i> Comment</Button>
-              <Button variant="light"><i className="fa fa-bookmark fa-fw"></i> Save</Button>
+              <Button variant="light"><i className="fa fa-bookmark fa-fw"></i> Save to Travel List</Button>
             </Card.Footer>
           </Card>
         </div>

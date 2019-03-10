@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Card, Button, Image, Container, Carousel, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card, Button, Image, Container, Carousel, Row, Col, ListGroup, ListGroupItem, Tabs, Tab } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTravelByID } from '../../actions/travelActions';
+import Ratings from './Ratings';
+import Comments from './Comments';
 
 class TravelPost extends Component {
   componentDidMount() {
@@ -23,7 +24,7 @@ class TravelPost extends Component {
               <Carousel>
                 {photos.map((photo, i) => 
                   <Carousel.Item>
-                    <img
+                    <Image
                       className="d-block w-100"
                       src={photo}
                       alt={`Image - ${i+1}`}
@@ -37,16 +38,43 @@ class TravelPost extends Component {
               : 
               null
             }
+              <Row className="mt-4">
+                <Col md={4}>
+                  <p className="text-center lead"><i className="fa fa-star  fa-fw"></i> 0.0 (0 Raters)</p>
+                </Col>
+                <Col md={4}>
+                  <p className="text-center lead"><i className="fa fa-comment-alt fa-fw"></i> 0 Comments</p>
+                </Col>
+                <Col md={4}></Col>
+              </Row>
             </Col>
             <Col md={1}></Col>
           </Row>
-          <Row>
-            <Col md={8}>
+          <Button className="float-right" variant="light"><i className="fa fa-ellipsis-v fa-fw"></i></Button>
+          <Button className="float-right" variant="light" title="Save to Travel List"><i className="fa fa-bookmark fa-fw"></i></Button>
+          <p className="text-primary" style={{marginBottom: -4}}>
+            <span className="lead"><strong>{name}</strong></span> <span>(<i className="fa fa-map-marker-alt fa-fw"></i>{location})</span>
+          </p>
+          <p className="text-secondary"><i className="fa fa-clock fa-fw"></i> {new Date(timestamp).toLocaleTimeString()} - {new Date(timestamp).toDateString()} &bull; <i className="fa fa-user-circle fa-fw"></i> {userPosted ? userPosted.fullname : null}</p>
+          <Tabs fill variant="pills" className="justify-content-center mt-3 mb-4" defaultActiveKey="description" id="uncontrolled-tab-example">
+            <Tab eventKey="description" title="Description">
+              <div dangerouslySetInnerHTML={{ __html: description }}></div>
+            </Tab>
+            <Tab eventKey="rating" title="Ratings">
+              <Ratings></Ratings>
+            </Tab>
+            <Tab eventKey="comment" title="Comments">
+              <Comments></Comments>
+            </Tab>
+            <Tab eventKey="about" title="About Promoter">
+            </Tab>
+          </Tabs>
+            {/* <Col md={8}>
               <p className="text-primary" style={{marginBottom: -4}}>
                 <span className="lead"><strong>{name}</strong></span> <span>(<i className="fa fa-map-marker-alt fa-fw"></i>{location})</span>
               </p>
               <p className="text-secondary"><i className="fa fa-clock fa-fw"></i> {new Date(timestamp).toLocaleTimeString()} - {new Date(timestamp).toDateString()} &bull; <i className="fa fa-user-circle fa-fw"></i> {userPosted ? userPosted.fullname : null}</p>
-              <div dangerouslySetInnerHTML={{ __html: description }}></div>
+              
             </Col>
             <Col md={4}>
             {userPosted ?
@@ -67,14 +95,13 @@ class TravelPost extends Component {
               :
               <p className="text-center"><i className="fa fa-spinner fa-fw fa-pulse"></i> Loading promoter details...</p>
             }
-            </Col>
-          </Row>
+            </Col> */}
         </Card.Body>
       </Card>
     )
   }
   render() {
-    const { loading, travel } = this.props.travel;
+    const { loading } = this.props.travel;
     return (
       <Container className="mb-5">
         {loading ? 
