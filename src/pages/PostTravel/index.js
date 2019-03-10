@@ -151,7 +151,7 @@ class PostTravel extends Component {
                 <FormGroup>
                   <FormLabel>Location:</FormLabel>
                   <Script
-                    url="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC3gTG6T0-GEcBN0GEwUJYRiUv-1O1tq0&libraries=places"
+                    url="https://maps.googleapis.com/maps/api/js?key=CLIENT_KEY0&libraries=places"
                     onLoad={this.handleScriptLoad}
                   />
                   <FormControl type="text" name="location" id="autocomplete" onChange={this.handleChange} value={this.state.location}></FormControl>
